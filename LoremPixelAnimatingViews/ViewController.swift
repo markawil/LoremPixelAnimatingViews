@@ -11,7 +11,7 @@ import CoreGraphics
 
 class ViewController: UICollectionViewController, UINavigationControllerDelegate {
 
-    var lastSelectedIndexPath: NSIndexPath?
+    var lastSelectedIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +37,27 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        lastSelectedIndexPath = indexPath
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         navigationController?.delegate = self
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "showDetails" {
+            let selected = collectionView?.indexPathsForSelectedItems
+            guard let indexPath = selected?.first else { return }
+            
+            let cell = collectionView!.cellForItem(at: indexPath) as! ImageCell
+            let image = cell.imageView.image
+            let detailsVC = segue.destination as! DetailViewController
+            detailsVC.image = image
+        }
     }
     
     func navigationController(_ navigationController: UINavigationController,
