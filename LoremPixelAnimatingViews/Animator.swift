@@ -20,8 +20,9 @@ class Animator: NSObject, UIViewControllerAnimatedTransitioning {
     
     // This method can only  be a nop if the transition is interactive and not a percentDriven interactive transition.
     public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
-        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
+        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
+        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
+        
         
             
     }
