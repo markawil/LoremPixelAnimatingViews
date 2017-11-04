@@ -8,18 +8,38 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        imageView.image = image
+        navigationController?.delegate = self
+        
+        if let image = image {
+            imageView.image = image
+        }
+
     }
     
     var image: UIImage?
     
+    func navigationController(_ navigationController: UINavigationController,
+                              animationControllerFor operation: UINavigationControllerOperation,
+                              from fromVC: UIViewController,
+                              to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        if operation == .pop {
+            let animator = Animator()
+            animator.presenting = false
+            return animator
+        } else {
+            return nil
+        }
+    }
 }

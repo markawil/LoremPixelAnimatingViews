@@ -65,7 +65,13 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
                               from fromVC: UIViewController,
                               to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        return nil
+        if operation == .push {
+            let animator = Animator()
+            animator.presenting = true
+            return animator
+        } else {
+            return nil
+        }
     }
 }
 
