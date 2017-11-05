@@ -16,7 +16,6 @@ class Animator: NSObject, UIViewControllerAnimatedTransitioning {
     // container controllers that have companion animations that might need to
     // synchronize with the main animation.
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        
         return 0.5
     }
     
@@ -52,5 +51,21 @@ class Animator: NSObject, UIViewControllerAnimatedTransitioning {
     
     func animatePop(transitionContext: UIViewControllerContextTransitioning) {
         
+        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
+        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
+        
+        // From -> To
+        toVC.view.alpha = 0
+        toVC.view.frame = transitionContext.finalFrame(for: toVC)
+        
+        // need to use the container view
+        let container = transitionContext.containerView
+        container.addSubview(toVC.view)
+        
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+            toVC.view.alpha = 1
+        }, completion: { (finished) in
+            transitionContext.completeTransition(finished)
+        })
     }
 }
