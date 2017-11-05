@@ -12,6 +12,8 @@ import CoreGraphics
 class ViewController: UICollectionViewController, UINavigationControllerDelegate {
 
     var lastSelectedIndexPath: IndexPath?
+    var isAnimatingAway: Bool = false
+    var isAnimatingBack: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +26,7 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 25
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -71,6 +73,32 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
             return animator
         } else {
             return nil
+        }
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        if let validNavController = self.navigationController {
+            if(scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0)
+            {
+                // scrolling upward, (or scrolling down to see more cells)
+                if isAnimatingBack == false && validNavController.navigationBar.isHidden == true {
+                    isAnimatingBack = true
+                    validNavController.setNavigationBarHidden(false, animated: true)
+                } else {
+                    isAnimatingBack = false
+                }
+            }
+            else {
+                // scrolling downward (or scrolling back up to the top cells)
+                if isAnimatingAway == false && validNavController.navigationBar.isHidden == false {
+                    isAnimatingAway = true
+                    validNavController.setNavigationBarHidden(true, animated: true)
+                } else {
+                    // it's done hiding
+                    isAnimatingAway = false
+                }
+            }
         }
     }
 }
