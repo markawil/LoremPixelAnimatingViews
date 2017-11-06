@@ -29,42 +29,112 @@ class Animator: NSObject, UIViewControllerAnimatedTransitioning {
         }
     }
     
+    func getCellImageView(_ viewController: ViewController) -> UIImageView {
+        
+        let indexPath = viewController.lastSelectedIndexPath!
+        let cell = viewController.collectionView!.cellForItem(at: indexPath) as! ImageCell
+        
+        return cell.imageView
+    }
+    
     func animatePush(transitionContext: UIViewControllerContextTransitioning) {
         
-        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
-        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
-        
-        // From -> To
-        toVC.view.alpha = 0
-        toVC.view.frame = transitionContext.finalFrame(for: toVC)
-        
-        // need to use the container view
+        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)! as! ViewController
+        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)! as! DetailViewController
         let container = transitionContext.containerView
+        
+        toVC.view.setNeedsLayout()
+        toVC.view.layoutIfNeeded()
+        
+        let fromImageView = getCellImageView(fromVC)
+        let toImageView = toVC.imageView!
+        
+        let snapshot = fromImageView.snapshotView(afterScreenUpdates: false)
+        fromImageView.isHidden = true
+        toImageView.isHidden = true
+        
+        // backdrop is to remove the modal rising affect of the detailViewController
+        let backdrop = UIView(frame: toVC.view.frame)
+        backdrop.backgroundColor = toVC.view.backgroundColor
+        container.addSubview(backdrop)
+        backdrop.alpha = 0
+        toVC.view.backgroundColor = UIColor.clear
+        
+        toVC.view.alpha = 0
+        let finalFrame = transitionContext.finalFrame(for: toVC)
+        var frame = finalFrame
+        frame.origin.y += frame.size.height
+        toVC.view.frame = frame
         container.addSubview(toVC.view)
         
+        snapshot?.frame = container.convert(fromImageView.frame, from: fromImageView)
+        container.addSubview(snapshot!)
+        
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+            
+            backdrop.alpha = 1
             toVC.view.alpha = 1
+            toVC.view.frame = finalFrame
+            snapshot?.frame = container.convert(toImageView.frame, from: toImageView)
+            
         }, completion: { (finished) in
+            
+            toVC.view.backgroundColor = backdrop.backgroundColor
+            backdrop.removeFromSuperview()
+            
+            fromImageView.isHidden = false
+            toImageView.isHidden = false
+            snapshot?.removeFromSuperview()
             transitionContext.completeTransition(finished)
         })
     }
     
     func animatePop(transitionContext: UIViewControllerContextTransitioning) {
         
-        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
-        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
+        // basically go backwards
         
-        // From -> To
-        toVC.view.alpha = 0
-        toVC.view.frame = transitionContext.finalFrame(for: toVC)
-        
-        // need to use the container view
+        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)! as! DetailViewController
+        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)! as! ViewController
         let container = transitionContext.containerView
-        container.addSubview(toVC.view)
+        
+        let fromImageView = fromVC.imageView!
+        let toImageView = getCellImageView(toVC)
+        
+        let snapshot = fromImageView.snapshotView(afterScreenUpdates: false)
+        fromImageView.isHidden = true
+        toImageView.isHidden = true
+        
+        let backdrop = UIView(frame: fromVC.view.frame)
+        backdrop.backgroundColor = fromVC.view.backgroundColor
+        container.insertSubview(backdrop, belowSubview: fromVC.view)
+        backdrop.alpha = 1
+        fromVC.view.backgroundColor = UIColor.clear
+        
+        let finalFrame = transitionContext.finalFrame(for: toVC)
+        toVC.view.frame = finalFrame
+        
+        var frame = finalFrame
+        frame.origin.y += frame.size.height
+        container.insertSubview(toVC.view, belowSubview: backdrop)
+        
+        snapshot?.frame = container.convert(fromImageView.frame, from: fromImageView)
+        container.addSubview(snapshot!)
         
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
-            toVC.view.alpha = 1
+            
+            backdrop.alpha = 0
+            fromVC.view.frame = frame
+            snapshot?.frame = container.convert(toImageView.frame, from: toImageView)
+            
         }, completion: { (finished) in
+            
+            fromVC.view.backgroundColor = backdrop.backgroundColor
+            backdrop.removeFromSuperview()
+            
+            fromImageView.isHidden = false
+            toImageView.isHidden = false
+            snapshot?.removeFromSuperview()
+            
             transitionContext.completeTransition(finished)
         })
     }

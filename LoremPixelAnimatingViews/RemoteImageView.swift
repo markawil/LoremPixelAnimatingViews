@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RemoteImageViewCell: UIImageView {
+class RemoteImageView: UIImageView {
 
     static var configuration: URLSessionConfiguration = {
         let config = URLSessionConfiguration.default
@@ -17,7 +17,7 @@ class RemoteImageViewCell: UIImageView {
     
     static var session: URLSession = {
         let session = URLSession(
-            configuration: RemoteImageViewCell.configuration,
+            configuration: RemoteImageView.configuration,
             delegate: nil,
             delegateQueue: nil)
         session.delegateQueue.maxConcurrentOperationCount = 2

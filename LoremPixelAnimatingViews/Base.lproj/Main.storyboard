@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tql-2D-pZM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tql-2D-pZM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -47,7 +47,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="181" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GamingTables" translatesAutoresizingMaskIntoConstraints="NO" id="H0M-Lq-kLD" customClass="RemoteImageViewCell" customModule="LoremPixelAnimatingViews" customModuleProvider="target">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GamingTables" translatesAutoresizingMaskIntoConstraints="NO" id="H0M-Lq-kLD" customClass="RemoteImageView" customModule="LoremPixelAnimatingViews" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="181" height="128"/>
                                         </imageView>
                                     </subviews>
@@ -60,7 +60,6 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="H0M-Lq-kLD" id="eFe-5I-TgM"/>
-                                    <segue destination="aI3-2T-zMW" kind="show" identifier="showDetails" id="NEc-mA-tqx"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -79,19 +78,19 @@
         <!--Detail View Controller-->
         <scene sceneID="83V-Hz-x3E">
             <objects>
-                <viewController id="aI3-2T-zMW" customClass="DetailViewController" customModule="LoremPixelAnimatingViews" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aI3-2T-zMW" customClass="DetailViewController" customModule="LoremPixelAnimatingViews" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="19g-CG-qsx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GamingTables" translatesAutoresizingMaskIntoConstraints="NO" id="qP7-fW-OZH">
-                                <rect key="frame" x="0.0" y="64" width="375" height="350"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GamingTables" translatesAutoresizingMaskIntoConstraints="NO" id="qP7-fW-OZH" customClass="RemoteImageView" customModule="LoremPixelAnimatingViews" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="375" height="375"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="350" id="yk0-i5-xzc"/>
+                                    <constraint firstAttribute="height" constant="375" id="yk0-i5-xzc"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIx-OS-x27">
-                                <rect key="frame" x="24" y="449.5" width="326" height="207.5"/>
+                                <rect key="frame" x="24" y="405.5" width="326" height="251.5"/>
                                 <string key="text">Lorem ipsum dolor sit amet, his dicat feugiat honestatis no, nam at partem denique indoctum, pro brute movet maiestatis ne. Est cu dicat debet reprehendunt. Vim no quando consul, albucius offendit aliquando ex vim, sed suas ignota ea. Ut qui aeterno mnesarchum quaerendum, sumo tritani argumentum ex est, eam mazim noluisse assentior no. In sed case omittantur, omnes tincidunt pro in.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -100,7 +99,7 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
-                            <constraint firstItem="nIx-OS-x27" firstAttribute="top" secondItem="qP7-fW-OZH" secondAttribute="bottom" constant="35.5" id="A2m-Mu-luB"/>
+                            <constraint firstItem="nIx-OS-x27" firstAttribute="top" secondItem="qP7-fW-OZH" secondAttribute="bottom" constant="10.5" id="A2m-Mu-luB"/>
                             <constraint firstItem="Kbk-7R-8qN" firstAttribute="trailing" secondItem="nIx-OS-x27" secondAttribute="trailing" constant="25" id="Voc-9O-Xl3"/>
                             <constraint firstItem="qP7-fW-OZH" firstAttribute="top" secondItem="Kbk-7R-8qN" secondAttribute="top" id="Vx2-ST-yW4"/>
                             <constraint firstItem="qP7-fW-OZH" firstAttribute="trailing" secondItem="Kbk-7R-8qN" secondAttribute="trailing" id="YHj-mB-z8D"/>

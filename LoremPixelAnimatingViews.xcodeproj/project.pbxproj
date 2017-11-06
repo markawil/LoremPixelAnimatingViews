@@ -13,7 +13,7 @@
 		2C8F1C291FA919F200B5F1BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C8F1C281FA919F200B5F1BE /* Assets.xcassets */; };
 		2C8F1C2C1FA919F200B5F1BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C8F1C2A1FA919F200B5F1BE /* LaunchScreen.storyboard */; };
 		2C8F1C341FA91CA500B5F1BE /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F1C331FA91CA500B5F1BE /* ImageCell.swift */; };
-		2C8F1C361FA9249700B5F1BE /* RemoteImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F1C351FA9249700B5F1BE /* RemoteImageViewCell.swift */; };
+		2C8F1C361FA9249700B5F1BE /* RemoteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F1C351FA9249700B5F1BE /* RemoteImageView.swift */; };
 		9848B8711FA96ED5006A7AEE /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9848B8701FA96ED5006A7AEE /* DetailViewController.swift */; };
 		9848B8731FA971F2006A7AEE /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9848B8721FA971F2006A7AEE /* Animator.swift */; };
 /* End PBXBuildFile section */
@@ -27,7 +27,7 @@
 		2C8F1C2B1FA919F200B5F1BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2C8F1C2D1FA919F200B5F1BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C8F1C331FA91CA500B5F1BE /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
-		2C8F1C351FA9249700B5F1BE /* RemoteImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageViewCell.swift; sourceTree = "<group>"; };
+		2C8F1C351FA9249700B5F1BE /* RemoteImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageView.swift; sourceTree = "<group>"; };
 		9848B8701FA96ED5006A7AEE /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		9848B8721FA971F2006A7AEE /* Animator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,7 +66,7 @@
 				2C8F1C231FA919F200B5F1BE /* ViewController.swift */,
 				9848B8721FA971F2006A7AEE /* Animator.swift */,
 				9848B8701FA96ED5006A7AEE /* DetailViewController.swift */,
-				2C8F1C351FA9249700B5F1BE /* RemoteImageViewCell.swift */,
+				2C8F1C351FA9249700B5F1BE /* RemoteImageView.swift */,
 				2C8F1C331FA91CA500B5F1BE /* ImageCell.swift */,
 				2C8F1C251FA919F200B5F1BE /* Main.storyboard */,
 				2C8F1C281FA919F200B5F1BE /* Assets.xcassets */,
@@ -152,7 +152,7 @@
 				2C8F1C241FA919F200B5F1BE /* ViewController.swift in Sources */,
 				2C8F1C221FA919F200B5F1BE /* AppDelegate.swift in Sources */,
 				9848B8711FA96ED5006A7AEE /* DetailViewController.swift in Sources */,
-				2C8F1C361FA9249700B5F1BE /* RemoteImageViewCell.swift in Sources */,
+				2C8F1C361FA9249700B5F1BE /* RemoteImageView.swift in Sources */,
 				2C8F1C341FA91CA500B5F1BE /* ImageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

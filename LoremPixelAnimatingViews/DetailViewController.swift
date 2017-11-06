@@ -20,6 +20,7 @@ class DetailViewController: UIViewController, UINavigationControllerDelegate {
         super.viewWillAppear(animated)
         
         navigationController?.delegate = self
+        edgesForExtendedLayout = UIRectEdge(rawValue: 0)
         
         if let image = image {
             imageView.image = image

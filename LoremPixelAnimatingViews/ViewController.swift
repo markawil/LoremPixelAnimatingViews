@@ -48,6 +48,26 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         lastSelectedIndexPath = indexPath
+        
+        let navBar = navigationController!.navigationBar
+        if isAnimatingBack == false && navBar.alpha < 1.0 {
+            isAnimatingBack = true
+            UIView.animate(withDuration: 0.5, animations: {
+                navBar.alpha = 1.0
+            }, completion: { (finished) in
+                self.isAnimatingBack = false
+            })
+        }
+         self.showDetailVC(forIndexPath: indexPath)
+    }
+    
+    func showDetailVC(forIndexPath indexPath: IndexPath) {
+        
+        let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        let cell = self.collectionView!.cellForItem(at: indexPath) as! ImageCell
+        let image = cell.imageView.image
+        detailVC.image = image
+        self.navigationController!.pushViewController(detailVC, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,7 +110,7 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
+
         if let validNavController = self.navigationController {
             if(scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0)
             {

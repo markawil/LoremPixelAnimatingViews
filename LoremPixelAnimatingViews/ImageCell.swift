@@ -10,7 +10,7 @@ import UIKit
 
 class ImageCell: UICollectionViewCell {
     
-    @IBOutlet var imageView: RemoteImageViewCell!
+    @IBOutlet var imageView: RemoteImageView!
     
     override func prepareForReuse() {
         super.prepareForReuse()
