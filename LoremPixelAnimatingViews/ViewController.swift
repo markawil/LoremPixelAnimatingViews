@@ -11,9 +11,7 @@ import CoreGraphics
 
 class ViewController: UICollectionViewController, UINavigationControllerDelegate {
 
-    var lastSelectedIndexPath: IndexPath?
-    var isAnimatingAway: Bool = false
-    var isAnimatingBack: Bool = false
+    var lastSelectedIndexPath: IndexPath?    
     var isFirstLaunchScroll = false
     
     override func viewDidLoad() {
@@ -111,24 +109,22 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
-        scrollViewScrolledForTranslucentNavBar(scrollView)
-        //scrollViewScrolledForOpaqueNavBar(scrollView)
+        //scrollViewFadeAway(scrollView)
+        scrollViewRaiseLower(scrollView)
     }
     
-    func scrollViewScrolledForTranslucentNavBar(_ scrollView: UIScrollView) {
+    func scrollViewFadeAway(_ scrollView: UIScrollView) {
         
-        if let validNavBar = self.navigationController?.navigationBar, let validTabBar = self.tabBarController?.tabBar {
+        if let validNavBar = self.navigationController?.navigationBar {
             if(scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0)
             {
                 // scrolling upward
-                if isAnimatingBack == false && (validNavBar.alpha == 0.0) {
-                    isAnimatingBack = true
+                // only do the animation once
+                if validNavBar.alpha == 0.0 {
                     UIView.animate(withDuration: 0.5, animations: {
                         validNavBar.alpha = 1.0
-                        validTabBar.alpha = 1.0
                     }, completion: { (finished) in
                         if finished {
-                            self.isAnimatingBack = false
                             print("finished animating back into view")
                         }
                     })
@@ -136,15 +132,12 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
             }
             else if !isFirstLaunchScroll {
                 // scrolling downward
-                if isAnimatingAway == false && (validNavBar.alpha == 1.0) {
-                    isAnimatingAway = true
+                if validNavBar.alpha == 1.0 {
                     UIView.animate(withDuration: 0.5, animations: {
                         validNavBar.alpha = 0.0
-                        validTabBar.alpha = 0.0
                     }, completion: { (finished) in
                         if finished {
-                            self.isAnimatingAway = false
-                            print("finished animating away")
+                            print("finished animating away from view")
                         }
                     })
                 }
@@ -152,7 +145,7 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
         }
     }
     
-    func scrollViewScrolledForOpaqueNavBar(_ scrollView: UIScrollView) {
+    func scrollViewRaiseLower(_ scrollView: UIScrollView) {
         
         if let validNavController = self.navigationController, let validTabBar = self.tabBarController?.tabBar {
             
@@ -163,13 +156,11 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
                 // show the bars again
                 validNavController.setNavigationBarHidden(false, animated: true)
                 updatedTabBarFrame.origin.y = validNavController.view.frame.height - updatedTabBarFrame.height
-                if isAnimatingBack == false && (validTabBar.frame.origin.y != updatedTabBarFrame.origin.y) {
-                    isAnimatingBack = true
+                if validTabBar.frame.origin.y != updatedTabBarFrame.origin.y {
                     UIView.animate(withDuration: 0.5, animations: {
                         validTabBar.frame = updatedTabBarFrame
                     }, completion: { (finished) in
                         if validTabBar.frame.origin.y == updatedTabBarFrame.origin.y {
-                            self.isAnimatingBack = false
                             print("finished animating back into view")
                         }
                     })
@@ -179,13 +170,11 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
                 // scrolling downward
                 validNavController.setNavigationBarHidden(true, animated: true)
                 updatedTabBarFrame.origin.y = validNavController.view.frame.height + updatedTabBarFrame.height
-                if isAnimatingAway == false && (validTabBar.frame.origin.y != updatedTabBarFrame.origin.y) {
-                    isAnimatingAway = true
+                if validTabBar.frame.origin.y != updatedTabBarFrame.origin.y {
                     UIView.animate(withDuration: 0.5, animations: {
                         validTabBar.frame = updatedTabBarFrame
                     }, completion: { (finished) in
                         if validTabBar.frame.origin.y == updatedTabBarFrame.origin.y {
-                            self.isAnimatingAway = false
                             print("finished animating away")
                         }
                     })
