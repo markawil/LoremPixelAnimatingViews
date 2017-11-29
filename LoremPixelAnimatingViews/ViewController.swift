@@ -11,7 +11,7 @@ import CoreGraphics
 
 class ViewController: UICollectionViewController, UINavigationControllerDelegate {
 
-    var lastSelectedIndexPath: IndexPath?    
+    var lastSelectedIndexPath: IndexPath?
     var isFirstLaunchScroll = false
     
     override func viewDidLoad() {
@@ -48,12 +48,9 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
         lastSelectedIndexPath = indexPath
         
         let navBar = navigationController!.navigationBar
-        if isAnimatingBack == false && navBar.alpha < 1.0 {
-            isAnimatingBack = true
+        if navBar.alpha == 0.0 {
             UIView.animate(withDuration: 0.5, animations: {
                 navBar.alpha = 1.0
-            }, completion: { (finished) in
-                self.isAnimatingBack = false
             })
         }
          self.showDetailVC(forIndexPath: indexPath)
