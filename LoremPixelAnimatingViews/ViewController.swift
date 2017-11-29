@@ -33,15 +33,15 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 25
+        return 20
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCell
-        let width = Int(view.frame.size.width) * 2
-        let url = URL(string: "http://lorempixel.com/\(width)/\(width)")!
-        cell.imageView.fkb_setImageWithURL(url: url, placeholder: nil)
+//        let width = Int(cell.frame.size.width)
+//        let url = URL(string: "http://lorempixel.com/\(width)/\(width)")!
+//        cell.imageView.fkb_setImageWithURL(url: url, placeholder: nil)
         
         return cell
     }
@@ -111,32 +111,86 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
-        if let validNavController = self.navigationController {
+        scrollViewScrolledForTranslucentNavBar(scrollView)
+        //scrollViewScrolledForOpaqueNavBar(scrollView)
+    }
+    
+    func scrollViewScrolledForTranslucentNavBar(_ scrollView: UIScrollView) {
+        
+        if let validNavBar = self.navigationController?.navigationBar, let validTabBar = self.tabBarController?.tabBar {
             if(scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0)
             {
-                // scrolling upward, (or scrolling down to see more cells)
-                if isAnimatingBack == false && validNavController.navigationBar.alpha < 1.0 {
+                // scrolling upward
+                if isAnimatingBack == false && (validNavBar.alpha == 0.0) {
                     isAnimatingBack = true
                     UIView.animate(withDuration: 0.5, animations: {
-                        validNavController.navigationBar.alpha = 1.0
+                        validNavBar.alpha = 1.0
+                        validTabBar.alpha = 1.0
+                    }, completion: { (finished) in
+                        if finished {
+                            self.isAnimatingBack = false
+                            print("finished animating back into view")
+                        }
                     })
-                } else {
-                    isAnimatingBack = false
                 }
             }
             else if !isFirstLaunchScroll {
-                // scrolling downward (or scrolling back up to the top cells)
-                if isAnimatingAway == false && validNavController.navigationBar.alpha > 0.0 {
+                // scrolling downward
+                if isAnimatingAway == false && (validNavBar.alpha == 1.0) {
                     isAnimatingAway = true
                     UIView.animate(withDuration: 0.5, animations: {
-                        validNavController.navigationBar.alpha = 0.0
+                        validNavBar.alpha = 0.0
+                        validTabBar.alpha = 0.0
+                    }, completion: { (finished) in
+                        if finished {
+                            self.isAnimatingAway = false
+                            print("finished animating away")
+                        }
                     })
-                } else {
-                    // it's done hiding
-                    isAnimatingAway = false
+                }
+            }
+        }
+    }
+    
+    func scrollViewScrolledForOpaqueNavBar(_ scrollView: UIScrollView) {
+        
+        if let validNavController = self.navigationController, let validTabBar = self.tabBarController?.tabBar {
+            
+            var updatedTabBarFrame = validTabBar.frame
+            
+            if(scrollView.panGestureRecognizer.translation(in: scrollView.superview).y > 0)
+            {
+                // show the bars again
+                validNavController.setNavigationBarHidden(false, animated: true)
+                updatedTabBarFrame.origin.y = validNavController.view.frame.height - updatedTabBarFrame.height
+                if isAnimatingBack == false && (validTabBar.frame.origin.y != updatedTabBarFrame.origin.y) {
+                    isAnimatingBack = true
+                    UIView.animate(withDuration: 0.5, animations: {
+                        validTabBar.frame = updatedTabBarFrame
+                    }, completion: { (finished) in
+                        if validTabBar.frame.origin.y == updatedTabBarFrame.origin.y {
+                            self.isAnimatingBack = false
+                            print("finished animating back into view")
+                        }
+                    })
+                }
+            }
+            else if !isFirstLaunchScroll {
+                // scrolling downward
+                validNavController.setNavigationBarHidden(true, animated: true)
+                updatedTabBarFrame.origin.y = validNavController.view.frame.height + updatedTabBarFrame.height
+                if isAnimatingAway == false && (validTabBar.frame.origin.y != updatedTabBarFrame.origin.y) {
+                    isAnimatingAway = true
+                    UIView.animate(withDuration: 0.5, animations: {
+                        validTabBar.frame = updatedTabBarFrame
+                    }, completion: { (finished) in
+                        if validTabBar.frame.origin.y == updatedTabBarFrame.origin.y {
+                            self.isAnimatingAway = false
+                            print("finished animating away")
+                        }
+                    })
                 }
             }
         }
     }
 }
-
