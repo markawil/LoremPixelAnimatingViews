@@ -17,7 +17,7 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.title = "LoremPixel"
+        self.title = "LoremFlickr"
         
         let layout = collectionView!.collectionViewLayout as! UICollectionViewFlowLayout
         let size = (self.view.bounds.width/2.0) - 5
@@ -37,9 +37,9 @@ class ViewController: UICollectionViewController, UINavigationControllerDelegate
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCell
-//        let width = Int(cell.frame.size.width)
-//        let url = URL(string: "http://lorempixel.com/\(width)/\(width)")!
-//        cell.imageView.fkb_setImageWithURL(url: url, placeholder: nil)
+        let width = Int(cell.frame.size.width)
+        let url = URL(string: "http://loremflickr.com/\(width)/\(width)")!
+        cell.imageView.fkb_setImageWithURL(url: url, placeholder: nil)
         
         return cell
     }

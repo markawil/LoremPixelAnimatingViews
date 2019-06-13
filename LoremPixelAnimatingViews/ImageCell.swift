@@ -12,9 +12,9 @@ class ImageCell: UICollectionViewCell {
     
     @IBOutlet var imageView: RemoteImageView!
     
-//    override func prepareForReuse() {
-//        super.prepareForReuse()
-//        imageView.fkb_cancelImageLoad()
-//        imageView.image = nil
-//    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.fkb_cancelImageLoad()
+        imageView.image = nil
+    }
 }

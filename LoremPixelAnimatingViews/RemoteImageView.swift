@@ -40,7 +40,7 @@ class RemoteImageView: UIImageView {
                         }
                         self.fkb_loadImageWithData(data: data!)
                     } else {
-                        print("received an HTTP \(http.statusCode) downloading \(url)")
+                        print("received an HTTP \(http.statusCode) downloading \(String(describing: url))")
                     }
                 } else {
                     print("Not an HTTP response")
@@ -71,5 +71,4 @@ class RemoteImageView: UIImageView {
     func fkb_cancelImageLoad() {
         imageTask?.cancel()
     }
-
 }
